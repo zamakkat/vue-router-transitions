@@ -1,8 +1,19 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import HomeIndex from '@/components/HomeIndex'
-import HomeAbout from '@/components/HomeAbout'
-import HomeContact from '@/components/HomeContact'
+
+const dynamicComponentImport = (name) => {
+  return () => ({
+    component: delayedImport(name)
+  })
+}
+
+const delayedImport = (name) => {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve(import(`@/components/${name}`))
+    }, 5000)
+  })
+}
 
 Vue.use(Router)
 
@@ -12,17 +23,17 @@ export default new Router({
     {
       path: '/',
       name: 'HomeIndex',
-      component: HomeIndex
+      component: dynamicComponentImport('HomeIndex')
     },
     {
       path: '/about',
       name: 'HomeAbout',
-      component: HomeAbout
+      component: dynamicComponentImport('HomeAbout')
     },
     {
       path: '/contact',
       name: 'HomeContact',
-      component: HomeContact
+      component: dynamicComponentImport('HomeContact')
     }
   ]
 })
