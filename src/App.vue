@@ -27,7 +27,6 @@ export default {
   margin-top: 60px;
 }
 
-
 .container {
   max-width: 1140px;
   margin-right: auto;
